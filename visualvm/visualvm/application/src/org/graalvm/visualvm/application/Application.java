@@ -45,7 +45,31 @@ import org.graalvm.visualvm.host.Host;
  */
 public abstract class Application extends StatefulDataSource {
     
-    /**
+    public static class ApplicationData {
+		private String id;
+		private Host host;
+
+		public ApplicationData() {
+		}
+
+		public String getId() {
+			return id;
+		}
+
+		public void setId(String id) {
+			this.id = id;
+		}
+
+		public Host getHost() {
+			return host;
+		}
+
+		public void setHost(Host host) {
+			this.host = host;
+		}
+	}
+
+	/**
      * Instance representing actually running VisualVM application.
      */
     public static final Application CURRENT_APPLICATION = ApplicationSupport.getInstance().createCurrentApplication();
@@ -55,11 +79,10 @@ public abstract class Application extends StatefulDataSource {
      */
     public static final int UNKNOWN_PID = -1;
 
-    private String id;
-    private Host host;
-    
+    private ApplicationData data = new ApplicationData();
 
-    /**
+
+	/**
      * Creates new instance of Application defined by a Host and unique identificator.
      * 
      * @param host Host on which the application is running.
@@ -80,8 +103,8 @@ public abstract class Application extends StatefulDataSource {
         super(state);
         if (host == null) throw new IllegalArgumentException("Host cannot be null");    // NOI18N
         if (id == null) throw new IllegalArgumentException("Application id cannot be null");  // NOI18N
-        this.host = host;
-        this.id = id;
+        this.data.setHost(host);
+        this.data.setId(id);
     }
 
 
@@ -91,7 +114,7 @@ public abstract class Application extends StatefulDataSource {
      * @return unique identificator of the application.
      */
     public final String getId() {
-        return id;
+        return data.getId();
     }
 
     /**
@@ -109,7 +132,7 @@ public abstract class Application extends StatefulDataSource {
      * @return Host on which the application is running.
      */
     public final Host getHost() {
-        return host;
+        return data.getHost();
     }
 
     /**
