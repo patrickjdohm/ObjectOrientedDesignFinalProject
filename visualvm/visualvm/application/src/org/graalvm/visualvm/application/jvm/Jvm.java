@@ -33,6 +33,7 @@ import java.util.List;
 import java.util.Properties;
 import java.util.logging.Logger;
 import org.graalvm.visualvm.application.Application;
+import org.graalvm.visualvm.application.jvm.Jvm.JvmOptionalFeatures;
 import org.graalvm.visualvm.core.model.Model;
 
 /**
@@ -41,7 +42,39 @@ import org.graalvm.visualvm.core.model.Model;
  * @author Tomas Hurka
  */
 public abstract class Jvm extends Model {
-    protected static final Logger LOGGER = Logger.getLogger(Jvm.class.getName());
+    public static class JvmVersion {
+		private JvmOptionalFeatures data;
+
+		public JvmVersion(JvmOptionalFeatures data) {
+			this.data = data;
+		}
+
+		public JvmOptionalFeatures getData() {
+			return data;
+		}
+
+		public void setData(JvmOptionalFeatures data) {
+			this.data = data;
+		}
+	}
+
+	public static class JvmOptionalFeatures {
+		private PropertyChangeSupport changeSupport;
+
+		public JvmOptionalFeatures(PropertyChangeSupport changeSupport) {
+			this.changeSupport = changeSupport;
+		}
+
+		public PropertyChangeSupport getChangeSupport() {
+			return changeSupport;
+		}
+
+		public void setChangeSupport(PropertyChangeSupport changeSupport) {
+			this.changeSupport = changeSupport;
+		}
+	}
+
+	protected static final Logger LOGGER = Logger.getLogger(Jvm.class.getName());
     
     /**
      * Property name for {@link #isDumpOnOOMEnabled()}. 
@@ -50,9 +83,9 @@ public abstract class Jvm extends Model {
      */
     public static final String PROPERTY_DUMP_OOME_ENABLED = "prop_oome";    // NOI18N
     
-    private PropertyChangeSupport changeSupport = new PropertyChangeSupport(this);
-    
-    /**
+    private JvmVersion data = new JvmVersion(new JvmOptionalFeatures(new PropertyChangeSupport(this)));
+
+	/**
      * Tests if target JVM is JRE 1.4.
      * @return <CODE>true</CODE> if JVM is JRE 1.4, <CODE>false</CODE> otherwise
      */
@@ -441,7 +474,7 @@ public abstract class Jvm extends Model {
      * @param listener  The PropertyChangeListener to be added
      */
     public final void addPropertyChangeListener(PropertyChangeListener listener) {
-        changeSupport.addPropertyChangeListener(listener);
+        data.getData().getChangeSupport().addPropertyChangeListener(listener);
     }
 
     /**
@@ -456,7 +489,7 @@ public abstract class Jvm extends Model {
      * @param listener  The PropertyChangeListener to be removed
      */
     public final void removePropertyChangeListener(PropertyChangeListener listener) {
-        changeSupport.removePropertyChangeListener(listener);
+        data.getData().getChangeSupport().removePropertyChangeListener(listener);
     }
     
     /**
@@ -469,7 +502,7 @@ public abstract class Jvm extends Model {
      * @param newValue  The new value of the property.
      */
     protected final void firePropertyChange(String propertyName, Object oldValue, Object newValue) {
-        changeSupport.firePropertyChange(propertyName, oldValue, newValue);
+        data.getData().getChangeSupport().firePropertyChange(propertyName, oldValue, newValue);
     }
     
 }
