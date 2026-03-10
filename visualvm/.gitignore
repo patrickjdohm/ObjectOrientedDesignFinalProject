@@ -1,0 +1,24 @@
+/visualvm/nbproject/private/
+/visualvm/*/nbproject/private/
+/visualvm/libs.profiler/*/nbproject/private/
+/visualvm/launcher/windows-src/nbproject/private/
+/visualvm/*/build/
+/visualvm/*/external/*.jar
+/visualvm/libs.profiler/*/build/
+/plugins/*/build/
+/plugins/*/nbproject/private/
+/plugins/*/external/*.jar
+/plugins/visualvm/
+/plugins/glassfish/amx-api/build/
+/samples/*/build/
+/samples/*/nbproject/private/
+/*/build/
+/*/dist/
+/visualvm/netbeans/
+/visualvm/nbantext.jar
+/l10n/en.nbms/
+/l10n/l10nantext.jar
+/plugins/nbproject/private/
+
+# Ignore Mac DS_Store files
+.DS_Store

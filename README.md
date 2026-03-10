@@ -120,3 +120,7 @@ Required sections:
 
 Submit the Github link via Blackboard.
 
+
+# Notes for VisualVm
+- VisualVm needs to be compiled with jdk8. Any newer jdk will cause issues because there are references to jdk 5 in there that became illegal in newer versions.
+- VisualVm uses a build system called ant. There is a copy of the windows installer in the repo for help.

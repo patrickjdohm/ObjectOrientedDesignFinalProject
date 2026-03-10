@@ -1,0 +1,8 @@
+dist/
+node_modules/
+visualvm-vscode-*.vsix
+LICENSE.txt
+.vscode-test/
+output
+mochawesome-report
+
